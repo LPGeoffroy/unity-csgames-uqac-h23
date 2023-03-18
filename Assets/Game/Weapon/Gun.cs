@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class Gun : MonoBehaviour
 {
-    public GameObject bullet;
-    public float shotForce = 10f;
-    public Transform muzzle;
-    public int magazineSize = 5;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private float shotForce = 10f;
+    [SerializeField] private Transform muzzle;
+    [SerializeField] private int magazineSize = 5;
+    [SerializeField] private GameObject UI;
 
     private int magazine;
 
     // Start is called before the first frame update
     void Start()
     {
+        UI.SetActive(false);
         magazine = magazineSize;
     }
 
@@ -29,10 +31,20 @@ public class Weapon : MonoBehaviour
 
                 magazine = magazine -1;
             }
+            else
+            {
+                UI.SetActive(true);
+            }
         }
         if (Input.GetMouseButtonDown(1))
         {
-            magazine = magazineSize;
+            Reload();
         }
+    }
+
+    void Reload()
+    {
+        magazine = magazineSize;
+        UI.SetActive(false);
     }
 }
